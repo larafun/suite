@@ -3,19 +3,20 @@
 namespace Larafun\Suite\Collection;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Larafun\Suite\Contracts\Collection\QueryAware;
 use Illuminate\Database\Query\Builder;
-use Larafun\Suite\Contracts\Presenter\Presenter as PresenterInterface;
-use Larafun\Suite\Contracts\Transformer\Transformer as TransformerInterface;
-use Larafun\Suite\Presenter\Presenter;
+use Larafun\Suite\Contracts\Queryable;
+use Larafun\Suite\Contracts\Presentable;
+use Larafun\Suite\Contracts\Transformable;
+use Larafun\Suite\Presenters\Presenter;
 use Larafun\Suite\Presenter\PaginationPresenter;
 use Larafun\Suite\Transformer\Transformer;
+use Larafun\Suite\Traits\QueryableTrait;
+use Larafun\Suite\Traits\PresentableTrait;
+use Larafun\Suite\Traits\TransformableTrait;
 
-class PresentableCollection extends EloquentCollection implements QueryAware
+class PresentableCollection extends EloquentCollection implements Queryable, Presentable, Transformable
 {
-    protected $query;
-    protected $presenter;
-    protected $transformer;
+    use QueryableTrait, PresentableTrait, TransformableTrait;
 
     public function __construct($items = [])
     {
@@ -33,6 +34,7 @@ class PresentableCollection extends EloquentCollection implements QueryAware
 
     public function present()
     {
+        dd('present');
         return $this->presenter()->present();
     }
 
@@ -47,14 +49,4 @@ class PresentableCollection extends EloquentCollection implements QueryAware
         return $this->presenter;
     }
 
-    public function setQuery(Builder $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-    public function query()
-    {
-        return $this->query;
-    }
 }

@@ -13,7 +13,7 @@ class SimpleTransformer
 
     public function __construct()
     {
-        $this->data = 'hey';
+        $this->data = 'hello';
     }
 
     public function boot()

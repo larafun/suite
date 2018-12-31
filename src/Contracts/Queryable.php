@@ -1,12 +1,12 @@
 <?php
 
-namespace Larafun\Suite\Contracts\Collection;
+namespace Larafun\Suite\Contracts;
 
 use Illuminate\Database\Query\Builder;
 
-interface QueryAware
+interface Queryable
 {
     public function setQuery(Builder $query);
 
-    public function query();
+    public function getQuery();
 }

@@ -3,7 +3,7 @@
 namespace Larafun\Suite;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Larafun\Suite\Contracts\Collection\QueryAware;
+use Larafun\Suite\Contracts\Queryable;
 
 class Builder extends EloquentBuilder
 {
@@ -11,7 +11,7 @@ class Builder extends EloquentBuilder
     public function get($columns = ['*'])
     {
         $collection = parent::get($columns);
-        if ($collection instanceof QueryAware) {
+        if ($collection instanceof Queryable) {
             $collection->setQuery($this->query);
         }
         return $collection;
