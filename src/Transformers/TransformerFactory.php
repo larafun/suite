@@ -6,13 +6,13 @@ use Larafun\Suite\Contracts\Transformer;
 
 class TransformerFactory
 {
-    public static function make($instance = null, $data = null): Transformer
+    public static function make($transformer = null, $data = null): Transformer
     {
-        if (empty($instance)) {
-            $instance = PlainTransformer::class;
+        if (empty($transformer)) {
+            $transformer = PlainTransformer::class;
         }
-        if (is_string($instance)) {
-            $transformer = app($instance, compact('data'));
+        if (is_string($transformer)) {
+            $transformer = app($transformer, compact('data'));
         }
         return $transformer;
     }

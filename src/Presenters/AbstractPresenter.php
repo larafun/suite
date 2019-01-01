@@ -2,6 +2,7 @@
 
 namespace Larafun\Suite\Presenters;
 
+use Larafun\Suite\Contracts\Queryable;
 use Larafun\Suite\Contracts\Presenter as PresenterInterface;
 use Larafun\Suite\Contracts\Transformable;
 use Larafun\Suite\Contracts\Transformer;
@@ -82,6 +83,9 @@ abstract class AbstractPresenter implements PresenterInterface
 
     public function getMeta()
     {
+        if (! $this->data instanceof Queryable) {
+            return [];
+        }
         $query = clone $this->data->getQuery();
         return [
             'skip'  => $query->offset,
