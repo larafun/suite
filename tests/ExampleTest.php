@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests;
+namespace Larafun\Suite\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Larafun\Suite\Tests\Models\Book;
 
-class ExampleTest extends TestCase
+class ExampleTest extends DataTestCase
 {
     public function testExample()
     {
-        $this->assertTrue(true);
+        factory(Book::class, 20)->create();
+        $this->assertCount(20, Book::all());
     }
 }

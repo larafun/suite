@@ -6,10 +6,9 @@ use Larafun\Suite\Contracts\Presenter as PresenterInterface;
 use Larafun\Suite\Contracts\Transformable;
 use Larafun\Suite\Contracts\Transformer;
 use Larafun\Suite\Transformers\TransformerFactory;
-use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
-abstract class AbstractPresenter implements PresenterInterface, Jsonable
+abstract class AbstractPresenter implements PresenterInterface
 {
     protected $data;
 

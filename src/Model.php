@@ -2,11 +2,17 @@
 
 namespace Larafun\Suite;
 
-use Larafun\Suite\Collection\PresentableCollection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Larafun\Suite\Collection\PresentableCollection;
+use Larafun\Suite\Contracts\Presentable;
+use Larafun\Suite\Contracts\Transformable;
+use Larafun\Suite\Traits\PresentableTrait;
+use Larafun\Suite\Traits\TransformableTrait;
 
-class Model extends EloquentModel
+abstract class Model extends EloquentModel implements Presentable, Transformable
 {
+    use PresentableTrait, TransformableTrait;
+
     public function newEloquentBuilder($query)
     {
         return new Builder($query);
