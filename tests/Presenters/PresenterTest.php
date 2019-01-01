@@ -8,6 +8,9 @@ use Larafun\Suite\Presenters\Presenter;
 use Larafun\Suite\Traits\TransformableTrait;
 use Larafun\Suite\Transformers\PlainTransformer;
 use Larafun\Suite\Tests\TestCase;
+use Larafun\Suite\Tests\Stubs\DataStub;
+use Larafun\Suite\Tests\Stubs\FirstTransformerStub;
+use Larafun\Suite\Tests\Stubs\SecondTransformerStub;
 
 class PresenterTest extends TestCase
 {
@@ -46,7 +49,7 @@ class PresenterTest extends TestCase
     }
 
     /** @test */
-    public function presenterTransformerHasPriority()
+    public function ownTransformerHasPriority()
     {
         $data = new DataStub();
         $data->setTransformer(FirstTransformerStub::class);
@@ -67,19 +70,4 @@ class PresenterTest extends TestCase
 
         $this->assertEquals(FirstTransformerStub::class, $presenter->getTransformer());
     }
-}
-
-class FirstTransformerStub extends PlainTransformer
-{
-    
-}
-
-class SecondTransformerStub extends PlainTransformer
-{
-
-}
-
-class DataStub implements Transformable
-{
-    use TransformableTrait;
 }

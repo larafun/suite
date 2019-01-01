@@ -2,6 +2,9 @@
 
 namespace Larafun\Suite\Traits;
 
+use Illuminate\Support\Collection;
+use Larafun\Suite\Contracts\Transformable;
+
 trait TransformableTrait
 {
     protected $transformer;
@@ -14,6 +17,16 @@ trait TransformableTrait
 
     public function getTransformer()
     {
-        return $this->transformer;
+        if ($this->transformer) {
+            return $this->transformer;
+        }
+
+        if (  ($this instanceof Collection)
+            && (($first = $this->first()) instanceof Transformable)
+        ){
+            return $first->getTransformer();
+        }
+
+        return null;
     }
 }
