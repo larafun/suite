@@ -4,6 +4,7 @@ namespace Larafun\Suite\Presenters;
 
 use Larafun\Suite\Contracts\Queryable;
 use Larafun\Suite\Contracts\Presenter as PresenterInterface;
+use Larafun\Suite\Contracts\Paginatable;
 use Larafun\Suite\Contracts\Transformable;
 use Larafun\Suite\Contracts\Transformer;
 use Larafun\Suite\Transformers\TransformerFactory;
@@ -81,16 +82,13 @@ abstract class AbstractPresenter implements PresenterInterface
         return 'meta';
     }
 
-    public function getMeta()
+    public function getMeta(): array
     {
-        if (! $this->data instanceof Queryable) {
+        if (! $this->data instanceof Paginatable) {
             return [];
         }
-        $query = clone $this->data->getQuery();
         return [
-            'skip'  => $query->offset,
-            'take'  => $query->limit,
-            'total' => $query->skip(0)->take(PHP_INT_MAX)->count(),
+            'pagination' => $this->data->getPaginator()->pagination()
         ];
     }
 
