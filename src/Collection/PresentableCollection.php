@@ -22,14 +22,6 @@ class PresentableCollection extends Collection implements
 {
     use QueryableTrait, PaginatableTrait, PresentableTrait, TransformableTrait;
 
-    public function __construct($items = [])
-    {
-        parent::__construct($items);
-
-        $this->setPresenter(Presenter::class);
-        $this->setPaginator(QueryPaginator::class);
-    }
-
     public function toJson($options = 0)
     {
         return $this->getPresenter()

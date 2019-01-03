@@ -15,11 +15,23 @@ abstract class Model extends EloquentModel implements Presentable, Transformable
 
     public function newEloquentBuilder($query)
     {
-        return new Builder($query);
+        return app(
+            config('suite.model.collection', Builder::class),
+            compact('query')
+        );
     }
 
     public function newCollection(array $models = [])
     {
-        return new PresentableCollection($models);
+        return app(
+            config('suite.model.collection', PresentableCollection::class),
+            ['items' => $models]
+        );
     }
+
+    public function toJson($options = 0)
+    {
+        return $this->getPresenter()->toJson($options);
+    }
+
 }
