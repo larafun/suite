@@ -66,3 +66,6 @@ These things should be added:
 - [ ] Artisan commands to make Transformers and Presenters
 - [ ] Global meta awareness
 - [ ] Configurable defaults for: Presenter keys, global Meta
+- [ ] Add Validation to Filters
+- [ ] Add Formatters to Filters
+- [ ] Split Filters into a separate package
