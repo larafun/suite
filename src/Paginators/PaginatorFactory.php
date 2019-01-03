@@ -21,10 +21,9 @@ class PaginatorFactory
 
     protected static function getDefaultPaginator($data = null)
     {
-        $default = NullPaginator::class;
         if (($data instanceof Collection) && ($data instanceof Queryable)) {
             return config('suite.collection.paginator', QueryPaginator::class);
         }
-        return $default;
+        return NullPaginator::class;
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Larafun\Suite\Contracts\Presenter as PresenterInterface;
 use Larafun\Suite\Presenters\PlainPresenter;
+use Larafun\Suite\Presenters\Presenter;
 
 class PresenterFactory
 {
@@ -26,7 +27,7 @@ class PresenterFactory
         if ($data instanceof Model) {
             return config('suite.model.presenter', $default);
         } elseif ($data instanceof Collection) {
-            return config('suite.collection.presenter', $default);
+            return config('suite.collection.presenter', Presenter::class);
         }
         return $default;
     }
