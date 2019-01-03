@@ -50,5 +50,13 @@ return [
          *  Larafun\Suite\Paginators\NullPaginator::class
          */
         'paginator' => Larafun\Suite\Paginators\QueryPaginator::class,
+    ],
+
+    /**
+     * These paths are used by the generators.
+     * Update them to suit your project file structure
+     */
+    'path' => [
+        'filters'   => 'Filters'
     ]
 ];

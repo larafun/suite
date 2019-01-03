@@ -1,0 +1,15 @@
+<?php
+
+namespace DummyNamespace;
+
+use Larafun\Suite\Filters\Filter;
+
+class DummyClass extends Filter
+{
+    public function defaults(): array
+    {
+        return [
+            // place your default values in here
+        ];
+    }
+}
