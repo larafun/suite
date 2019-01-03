@@ -4,6 +4,7 @@ namespace Larafun\Suite\Tests\Integration;
 
 use Illuminate\Database\Query\Builder;
 use Larafun\Suite\Collection\PresentableCollection;
+use Larafun\Suite\Presenters\Presenter;
 use Larafun\Suite\Tests\DataTestCase;
 use Larafun\Suite\Tests\Models\Book;
 use Larafun\Suite\Tests\Models\TransformedBook;
@@ -32,6 +33,7 @@ class PresentableCollectionTest extends DataTestCase
     {
         factory(Book::class, 2)->create();
         $collection = Book::all();
+        $collection->setPresenter(Presenter::class);
         $presented = json_decode($collection->toJson());
 
         $this->assertObjectHasAttribute('data', $presented);

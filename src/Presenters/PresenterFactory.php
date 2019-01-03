@@ -4,11 +4,12 @@ namespace Larafun\Suite\Presenters;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Larafun\Suite\Contracts\Presenter;
+use Larafun\Suite\Contracts\Presenter as PresenterInterface;
+use Larafun\Suite\Presenters\PlainPresenter;
 
 class PresenterFactory
 {
-    public static function make($presenter = null, $data = null): Presenter
+    public static function make($presenter = null, $data = null): PresenterInterface
     {
         if (empty($presenter)) {
             $presenter = self::getDefaultPresenter($data);
@@ -21,7 +22,7 @@ class PresenterFactory
 
     protected static function getDefaultPresenter($data = null)
     {
-        $default = Presenter::class;
+        $default = PlainPresenter::class;
         if ($data instanceof Model) {
             return config('suite.model.presenter', $default);
         } elseif ($data instanceof Collection) {
