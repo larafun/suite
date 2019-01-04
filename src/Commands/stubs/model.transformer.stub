@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyTransformerNamespace;
+use Larafun\Suite\Model;
+
+class DummyClass extends Model
+{
+    
+    /**
+     *  The model transformer class
+     */
+    public function getTransformer()
+    {
+        return DummyTransformerClass::class;
+    }
+}

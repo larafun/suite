@@ -3,7 +3,6 @@
 namespace Larafun\Suite;
 
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
-use Larafun\Suite\Commands\BuildFilterCommand;
 
 class ServiceProvider extends IlluminateServiceProvider
 {
@@ -16,7 +15,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                BuildFilterCommand::class,
+                Commands\BuildFilterCommand::class,
+                Commands\BuildTransformerCommand::class,
+                Commands\BuildPresenterCommand::class,
+                Commands\BuildModelCommand::class,
             ]);
         }
     }

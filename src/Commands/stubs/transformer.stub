@@ -1,0 +1,15 @@
+<?php
+
+namespace DummyNamespace;
+
+use Larafun\Suite\Transformers\Transformer;
+
+class DummyClass extends Transformer
+{
+    public function transform($model)
+    {
+        return [
+            // place your data in here
+        ];
+    }
+}
