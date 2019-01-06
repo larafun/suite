@@ -12,7 +12,7 @@ class Builder extends EloquentBuilder
     {
         $collection = parent::get($columns);
         if ($collection instanceof Queryable) {
-            $collection->setQuery($this->query);
+            $collection->setQuery($this->applyScopes()->getQuery());
         }
         return $collection;
     }
