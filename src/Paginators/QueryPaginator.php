@@ -18,6 +18,7 @@ class QueryPaginator implements Paginator
     public function pagination(): array
     {
         $query = clone $this->query;
+        $query->orders = null;  // ingoring order by criteria
         return [
             'skip'  => (int) $query->offset ?? 0,
             'take'  => (int) $query->limit ?? PHP_INT_MAX,
