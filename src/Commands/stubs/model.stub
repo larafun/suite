@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use Larafun\Suite\Model;
+
+class DummyClass extends Model
+{
+
+}

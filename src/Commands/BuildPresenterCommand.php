@@ -6,28 +6,28 @@ use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class BuildFilterCommand extends GeneratorCommand
+class BuildPresenterCommand extends GeneratorCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'build:filter';
+    protected $name = 'build:presenter';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new filter';
+    protected $description = 'Create a new presenter';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Filter';
+    protected $type = 'Presenter';
 
     /**
      * Get the stub file for the generator.
@@ -36,7 +36,7 @@ class BuildFilterCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/stubs/filter.stub';
+        return __DIR__.'/stubs/presenter.stub';
     }
 
     /**
@@ -47,7 +47,7 @@ class BuildFilterCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\\'.str_replace('/', '\\', config('suite.path.filters', 'Filters'));
+        return $rootNamespace.'\\'.str_replace('/', '\\', config('suite.path.presenters', 'Presenters'));
     }
 
     /**
@@ -58,7 +58,7 @@ class BuildFilterCommand extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the filter'],
+            ['name', InputArgument::REQUIRED, 'The name of the presenter'],
         ];
     }
 }

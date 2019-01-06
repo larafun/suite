@@ -1,0 +1,27 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFilterNamespace;
+use DummyTransformerNamespace;
+use Larafun\Suite\Model;
+
+class DummyClass extends Model
+{
+
+    /**
+     *  Build your general filter scope.
+     */
+    public function scopeFilter($query, DummyFilterClass $filter)
+    {
+        return $query;
+    }
+
+    /**
+     *  The model transformer class
+     */
+    public function getTransformer()
+    {
+        return DummyTransformerClass::class;
+    }
+}

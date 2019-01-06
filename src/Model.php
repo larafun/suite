@@ -16,7 +16,7 @@ abstract class Model extends EloquentModel implements Presentable, Transformable
     public function newEloquentBuilder($query)
     {
         return app(
-            config('suite.model.collection', Builder::class),
+            config('suite.model.builder', Builder::class),
             compact('query')
         );
     }

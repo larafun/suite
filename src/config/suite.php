@@ -53,10 +53,15 @@ return [
     ],
 
     /**
-     * These paths are used by the generators.
+     * These paths are used by the generators and are relative to 
+     * the project default values (eg: App, App/Http/Controllers, etc)
      * Update them to suit your project file structure
      */
     'path' => [
-        'filters'   => 'Filters'
+        'filters'       => 'Filters',
+        'transformers'  => 'Transformers',
+        'presenters'    => 'Presenters',
+        'models'        => 'Models',
+        'controllers'   => 'Api',
     ]
 ];

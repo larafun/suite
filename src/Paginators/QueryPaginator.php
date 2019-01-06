@@ -20,8 +20,8 @@ class QueryPaginator implements Paginator
         $query = clone $this->query;
         $query->orders = null;  // ingoring order by criteria
         return [
-            'skip'  => (int) $query->offset ?? 0,
-            'take'  => (int) $query->limit ?? PHP_INT_MAX,
+            'skip'  => (int) ($query->offset ?? 0),
+            'take'  => (int) ($query->limit ?? PHP_INT_MAX),
             'total' => (int) $query->skip(0)->take(PHP_INT_MAX)->count(),
         ];
     }
