@@ -12,4 +12,11 @@ class DummyClass extends Filter
             // place your default values in here
         ];
     }
+
+    public function rules(): array
+    {
+        return [
+            // place your validation rules in here
+        ];
+    }
 }
