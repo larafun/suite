@@ -32,6 +32,11 @@ abstract class AbstractFilter
         return [];
     }
 
+    public function all()
+    {
+        return $this->attributes;
+    }
+    
     protected function validate(array $attributes = [])
     {
         $validator = Validator::make($attributes, $this->rules());
