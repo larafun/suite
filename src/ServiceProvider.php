@@ -16,9 +16,8 @@ class ServiceProvider extends IlluminateServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Commands\BuildFilterCommand::class,
-                Commands\BuildTransformerCommand::class,
-                Commands\BuildPresenterCommand::class,
                 Commands\BuildModelCommand::class,
+                Commands\BuildResourceCommand::class,
             ]);
         }
     }

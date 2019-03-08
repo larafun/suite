@@ -43,7 +43,7 @@ class BuildModelCommand extends GeneratorCommand
             $this->input->setOption('migration', true);
             $this->input->setOption('controller', true);
             $this->input->setOption('filter', true);
-            $this->input->setOption('transformer', true);
+            $this->input->setOption('resource', true);
         }
 
         if (parent::handle() === false && !$this->option('force')) {
@@ -66,8 +66,8 @@ class BuildModelCommand extends GeneratorCommand
             $this->createFilter();
         }
 
-        if ($this->option('transformer')) {
-            $this->createTransformer();
+        if ($this->option('resource')) {
+            $this->createResource();
         }
     }
 
@@ -129,23 +129,23 @@ class BuildModelCommand extends GeneratorCommand
     }
 
     /**
-     * Create a transformer for the model.
+     * Create a resource for the model.
      *
      * @return void
      */
-    protected function createTransformer()
+    protected function createResource()
     {
-        $this->call('build:transformer', [
-            'name' => $this->getNameInput() . 'Transformer',
+        $this->call('build:resource', [
+            'name' => $this->getNameInput() . 'Resource',
             '--model' => $this->getModelClass(),
         ]);
     }
 
-    protected function getTransformerClass()
+    protected function getResourceClass()
     {
         return str_replace('/', '\\', $this->rootNamespace()
-            . config('suite.path.transformers', 'Transformers') . '\\'
-            . $this->getNameInput() . 'Transformer');
+            . config('suite.path.resources', 'Resources') . '\\'
+            . $this->getNameInput() . 'Resource');
     }
 
     protected function getFilterClass()
@@ -187,14 +187,14 @@ class BuildModelCommand extends GeneratorCommand
      */
     protected function buildModelReplacements(array $replace)
     {
-        $transformer = $this->getTransformerClass();
+        $resource = $this->getResourceClass();
         $filter = $this->getFilterClass();
 
         return array_merge($replace, [
             'DummyFilterNamespace' => $filter,
             'DummyFilterClass' => class_basename($filter),
-            'DummyTransformerNamespace' => $transformer,
-            'DummyTransformerClass' => class_basename($transformer),
+            'DummyResourceNamespace' => $resource,
+            'DummyResourceClass' => class_basename($resource),
         ]);
     }
 
@@ -209,8 +209,8 @@ class BuildModelCommand extends GeneratorCommand
         if ($this->option('filter')) {
             $stub .= 'filter.';
         }
-        if ($this->option('transformer')) {
-            $stub .= 'transformer.';
+        if ($this->option('resource')) {
+            $stub .= 'resource.';
         }
         return __DIR__ . $stub . 'stub';
     }
@@ -258,7 +258,7 @@ class BuildModelCommand extends GeneratorCommand
 
             ['filter', 'f', InputOption::VALUE_NONE, 'Create a new filter for the model'],
 
-            ['transformer', 't', InputOption::VALUE_NONE, 'Create a new transformer for the model'],
+            ['resource', 'r', InputOption::VALUE_NONE, 'Create a new resource for the model'],
         ];
     }
 }

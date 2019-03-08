@@ -2,9 +2,9 @@
 
 namespace Larafun\Suite\Paginators;
 
+use DB;
 use Larafun\Suite\Contracts\Queryable;
 use Larafun\Suite\Contracts\Paginator;
-use Illuminate\Database\Query\Builder;
 
 class QueryPaginator implements Paginator
 {
@@ -35,7 +35,7 @@ class QueryPaginator implements Paginator
         }
 
         // the query has groups, so we need to count the total result set.
-        return app('DB')::table(app('DB')::raw("(" . $query->toSql() . ") as derived"))
+        return DB::table(DB::raw("(" . $query->toSql() . ") as derived"))
             ->mergeBindings($query)
             ->count()
         ;

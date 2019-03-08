@@ -1,0 +1,15 @@
+<?php
+
+namespace DummyNamespace;
+
+use Larafun\Suite\Resources\Resource;
+
+class DummyClass extends Resource
+{
+    public function item($model)
+    {
+        return [
+            // place your data in here
+        ];
+    }
+}

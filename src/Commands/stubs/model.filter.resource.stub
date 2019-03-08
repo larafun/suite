@@ -3,7 +3,7 @@
 namespace DummyNamespace;
 
 use DummyFilterNamespace;
-use DummyTransformerNamespace;
+use DummyResourceNamespace;
 use Larafun\Suite\Model;
 
 class DummyClass extends Model
@@ -18,10 +18,10 @@ class DummyClass extends Model
     }
 
     /**
-     *  The model transformer class
+     *  The model resource class
      */
-    public function getTransformer()
+    public function getResource()
     {
-        return DummyTransformerClass::class;
+        return DummyResourceClass::class;
     }
 }

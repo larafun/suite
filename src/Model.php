@@ -4,14 +4,13 @@ namespace Larafun\Suite;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Larafun\Suite\Collection\PresentableCollection;
-use Larafun\Suite\Contracts\Presentable;
-use Larafun\Suite\Contracts\Transformable;
-use Larafun\Suite\Traits\PresentableTrait;
-use Larafun\Suite\Traits\TransformableTrait;
+use Larafun\Suite\Contracts\Resourceable;
+use Illuminate\Contracts\Support\Responsable;
+use Larafun\Suite\Traits\ResourceableTrait;
 
-abstract class Model extends EloquentModel implements Presentable, Transformable
+abstract class Model extends EloquentModel implements Responsable, Resourceable
 {
-    use PresentableTrait, TransformableTrait;
+    use ResourceableTrait;
 
     public function newEloquentBuilder($query)
     {
@@ -27,11 +26,6 @@ abstract class Model extends EloquentModel implements Presentable, Transformable
             config('suite.model.collection', PresentableCollection::class),
             ['items' => $models]
         );
-    }
-
-    public function toJson($options = 0)
-    {
-        return $this->getPresenter()->toJson($options);
     }
 
 }

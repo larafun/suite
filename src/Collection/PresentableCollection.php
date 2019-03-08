@@ -4,28 +4,29 @@ namespace Larafun\Suite\Collection;
 
 use Illuminate\Database\Eloquent\Collection;
 use Larafun\Suite\Contracts\Queryable;
-use Larafun\Suite\Contracts\Paginatable;
-use Larafun\Suite\Contracts\Presentable;
-use Larafun\Suite\Contracts\Transformable;
-use Larafun\Suite\Paginators\QueryPaginator;
-use Larafun\Suite\Presenters\Presenter;
 use Larafun\Suite\Traits\QueryableTrait;
 use Larafun\Suite\Traits\PaginatableTrait;
-use Larafun\Suite\Traits\PresentableTrait;
-use Larafun\Suite\Traits\TransformableTrait;
+use Illuminate\Contracts\Support\Responsable;
+use Larafun\Suite\Resources\CollectionResource;
+use Larafun\Suite\Resources\Resource;
+use Larafun\Suite\Paginators\QueryPaginator;
+use App\Http\Resources\Book;
 
 class PresentableCollection extends Collection implements
     Queryable,
-    Paginatable,
-    Presentable,
-    Transformable
+    Responsable
 {
-    use QueryableTrait, PaginatableTrait, PresentableTrait, TransformableTrait;
+    use QueryableTrait, PaginatableTrait;
 
-    public function toJson($options = 0)
+    public function toResponse($request)
     {
-        return $this->getPresenter()
-            ->toJson($options)
+        return Resource::collection($this)
+            ->additional([
+                'meta' => [
+                    'pagination' => (new QueryPaginator($this))->pagination()
+                ]
+            ])
+            ->response()
         ;
     }
 }

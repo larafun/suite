@@ -1,0 +1,14 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullModelClass;
+use Larafun\Suite\Resources\Resource;
+
+class DummyClass extends Resource
+{
+    public function item(DummyModelClass $DummyModelVariable)
+    {
+        return $DummyModelVariable->toArray();
+    }
+}

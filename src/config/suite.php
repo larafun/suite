@@ -30,7 +30,7 @@ return [
          * The default behaviour can be acheived using:
          *  Larafun\Suite\Presenters\PlainPresenter::class
          */
-        'presenter' => Larafun\Suite\Presenters\Presenter::class,
+        'resource'      => Larafun\Suite\Resources\Resource::class,
     ],
 
     'collection' => [
@@ -41,7 +41,7 @@ return [
          * The default behaviour can be acheived using:
          *  Larafun\Suite\Presenters\PlainPresenter::class
          */
-        'presenter' => Larafun\Suite\Presenters\Presenter::class,
+        'resource' => Larafun\Suite\Resources\Resource::class,
 
         /**
          * The default Paginator that the Queryable Collections will use
@@ -59,8 +59,7 @@ return [
      */
     'path' => [
         'filters'       => 'Filters',
-        'transformers'  => 'Transformers',
-        'presenters'    => 'Presenters',
+        'resources'     => 'Http/Resources',
         'models'        => 'Models',
         'controllers'   => 'Api',
     ]

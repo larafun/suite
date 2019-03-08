@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyResourceNamespace;
+use Larafun\Suite\Model;
+
+class DummyClass extends Model
+{
+    
+    /**
+     *  The model resource class
+     */
+    public function getResource()
+    {
+        return DummyResourceClass::class;
+    }
+}

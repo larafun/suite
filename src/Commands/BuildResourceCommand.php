@@ -7,28 +7,28 @@ use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class BuildTransformerCommand extends GeneratorCommand
+class BuildResourceCommand extends GeneratorCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'build:transformer';
+    protected $name = 'build:resource';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new transformer';
+    protected $description = 'Create a new resource';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Transformer';
+    protected $type = 'Resource';
 
     /**
      * Get the stub file for the generator.
@@ -37,9 +37,9 @@ class BuildTransformerCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        $stub = '/stubs/transformer.stub';
+        $stub = '/stubs/resource.stub';
         if ($this->option('model')) {
-            $stub = '/stubs/transformer.model.stub';
+            $stub = '/stubs/resource.model.stub';
         }
         return __DIR__ . $stub;
     }
@@ -52,7 +52,7 @@ class BuildTransformerCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\\'.str_replace('/', '\\', config('suite.path.transformers', 'Transformers'));
+        return $rootNamespace.'\\'.str_replace('/', '\\', config('suite.path.resources', 'Http/Resources'));
     }
 
     /**
@@ -124,7 +124,7 @@ class BuildTransformerCommand extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the transformer'],
+            ['name', InputArgument::REQUIRED, 'The name of the resource'],
         ];
     }
 
@@ -136,7 +136,7 @@ class BuildTransformerCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a transformer for the given model.'],
+            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource for the given model.'],
         ];
     }
 }
