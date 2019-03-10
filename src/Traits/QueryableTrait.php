@@ -14,7 +14,7 @@ trait QueryableTrait
         return $this;
     }
 
-    public function getQuery()
+    public function getQuery(): Builder
     {
         return $this->query;
     }

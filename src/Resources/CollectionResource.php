@@ -2,7 +2,16 @@
 
 namespace Larafun\Suite\Resources;
 
-class CollectionResource extends ResourceCollection
-{
+use Larafun\Suite\Paginators\QueryPaginator;
 
+class CollectionResource extends Resource
+{
+    public function with($request) {
+        return [
+            'meta' => [
+                'foo'   => 'bar',
+                'pagination' => (new QueryPaginator($this->resource))->pagination()
+            ]
+        ];
+    }
 }

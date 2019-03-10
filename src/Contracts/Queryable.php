@@ -8,5 +8,5 @@ interface Queryable
 {
     public function setQuery(Builder $query);
 
-    public function getQuery();
+    public function getQuery(): Builder;
 }

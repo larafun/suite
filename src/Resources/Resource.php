@@ -5,6 +5,7 @@ namespace Larafun\Suite\Resources;
 use Illuminate\Http\Resources\Json\Resource as BaseResource;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Resources\MissingValue;
+use Larafun\Suite\Contracts\Paginatable;
 
 class Resource extends BaseResource
 {
@@ -16,6 +17,22 @@ class Resource extends BaseResource
     public function boot()
     {
         //
+    }
+
+    public function with($request)
+    {
+        return array_merge(
+            $this->with,
+            $this->pagination()
+        );
+    }
+
+    protected function pagination()
+    {
+        if ($this->resource instanceof Paginatable) {
+            return $this->resource->getPaginator()->pagination();
+        }
+        return [];
     }
 
     public function toArray($request)
@@ -33,7 +50,7 @@ class Resource extends BaseResource
         return $resource;
     }
 
-    public function map($resource)
+    public function map(Collection $resource)
     {
         return $resource->map(function ($value) {
             return $this->item($value);
@@ -64,7 +81,7 @@ class Resource extends BaseResource
     }
 
     public static function collection($resource)
-    {
+    {       
         return (new static($resource))->asCollection();
     }
 

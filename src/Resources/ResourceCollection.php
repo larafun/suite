@@ -8,6 +8,7 @@ use Larafun\Suite\Contracts\Resourceable;
 
 class ResourceCollection extends LaravelResourceCollection
 {
+
     public function __construct(Collection $resource)
     {
         $this->identifyCollects($resource);

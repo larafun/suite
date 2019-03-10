@@ -7,7 +7,7 @@ use Larafun\Suite\Paginators\PaginatorFactory;
 
 trait PaginatableTrait
 {
-    protected $paginator;
+    protected $paginator = null;
 
     public function setPaginator($paginator)
     {
