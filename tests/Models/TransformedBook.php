@@ -2,12 +2,12 @@
 
 namespace Larafun\Suite\Tests\Models;
 
-use Larafun\Suite\Tests\Stubs\FirstTransformerStub;
+use Larafun\Suite\Tests\Stubs\FirstResourceStub;
 
 class TransformedBook extends Book
 {
-    public function getTransformer()
+    public function getResource()
     {
-        return FirstTransformerStub::class;
+        return FirstResourceStub::class;
     }
 }

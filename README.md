@@ -1,51 +1,6 @@
 # Larafun Suite
 A small collection of classes and traits that will make your Laravel development even more awesome!
 
-## Refactoring
-
-We aim for the following functionalities
-
- - [ ] Respond with models
- - [ ] Respond with paginatable Eloquent collections
- - [ ] An easy way to paginate DB queries
- - [ ] An easy way to change the default behaviour:
-    - meta keys
-    - data keys
-    - pagination keys
-    - pagination position
-    - default transformer
-    - default paginator
-    - default Eloquent Collection
- - [ ] An easy way to build files
-    - models
-    - filters
-    - resources
-- [ ] Grooming
-    - Rename the Eloquent Collection
-    - ResourceableTrait: Use a configurable resource
-      - Use the Resourceable trait in the Collection?
-    - Builder: registerRealScopes
-    - Query Builder: register macro to return a Resourceable Collection
-    - Drop the Queryable Trait?
-    - Drop the Paginatable Trait?
-    - Drop the ResourceCollection and CollectionResource in favour of Resource
-    - Do we need the PaginationFactory?
-    - Filters add Formatters and Sanitizers
-    - Contracts - do we need them all?
-    - config - check comments and adapt
-    - check that all commands are working properly
-    - PresentableCollection - rename it
-    - composer - check that all dependencies are met
-
-
-- [ ] Find a good way to apply the paginator.
-- [ ] Fix the failing tests.
-    - Build tests for the new features
-
-- [ ] Read the docs
-    - Add plenty of examples and use cases
-
-
 ## Installation
 
 Requires PHP > 7.0, Laravel > 5.5
@@ -75,7 +30,7 @@ Now you can use your models as you regularly would.
 
 ## Why use this package?
 
-Because you get **Presenters**, **Transformers** and **Pagination** out of the box!
+Because you get enhanced **Resources** and **Pagination** out of the box!
 
 ```php
 class BookController extends Controller
@@ -114,3 +69,53 @@ These things should be added:
 - [ ] Add Validation to Filters
 - [ ] Add Formatters to Filters
 - [ ] Split Filters into a separate package
+
+## Refactoring
+
+We aim for the following functionalities
+
+ - [ ] Respond with models
+ - [ ] Respond with paginatable Eloquent collections
+ - [ ] An easy way to paginate DB queries
+ - [ ] An easy way to change the default behaviour:
+    - meta keys
+    - data keys
+    - pagination keys
+    - pagination position
+    - default transformer
+    - default paginator
+    - default Eloquent Collection
+ - [ ] An easy way to build files
+    - models
+    - filters
+    - resources
+- [ ] Grooming
+    - Rename the Eloquent Collection
+    - ResourceableTrait: Use a configurable resource
+      - Use the Resourceable trait in the Collection?
+    - Builder: registerRealScopes
+    - Query Builder: register macro to return a Resourceable Collection
+    - Drop the Queryable Trait?
+    - Drop the Paginatable Trait?
+    - Drop the ResourceCollection and CollectionResource in favour of Resource
+    - Do we need the PaginationFactory?
+    - Filters add Formatters and Sanitizers
+    - Contracts - do we need them all?
+    - config - check comments and adapt
+    - check that all commands are working properly
+    - PresentableCollection - rename it
+    - composer - check that all dependencies are met
+    - have a custom Resource to be used when generating new Resources
+
+- [ ] Tests
+    - ResourceableCollection
+    - Commands
+    - Paginators
+    - Resources
+
+- [ ] Find a good way to apply the paginator.
+- [ ] Fix the failing tests.
+    - Build tests for the new features
+
+- [ ] Read the docs
+    - Add plenty of examples and use cases

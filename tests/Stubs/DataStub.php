@@ -2,10 +2,10 @@
 
 namespace Larafun\Suite\Tests\Stubs;
 
-use Larafun\Suite\Contracts\Transformable;
-use Larafun\Suite\Traits\TransformableTrait;
+use Larafun\Suite\Contracts\Resourceable;
+use Larafun\Suite\Traits\ResourceableTrait;
 
-class DataStub implements Transformable
+class DataStub implements Resourceable
 {
-    use TransformableTrait;
+    use ResourceableTrait;
 }

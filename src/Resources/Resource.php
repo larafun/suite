@@ -2,10 +2,10 @@
 
 namespace Larafun\Suite\Resources;
 
-use Illuminate\Http\Resources\Json\Resource as BaseResource;
 use Illuminate\Support\Collection;
-use Illuminate\Http\Resources\MissingValue;
 use Larafun\Suite\Contracts\Paginatable;
+use Illuminate\Http\Resources\MissingValue;
+use Illuminate\Http\Resources\Json\Resource as BaseResource;
 
 class Resource extends BaseResource
 {

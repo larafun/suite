@@ -1,6 +1,6 @@
 {
     "name": "larafun/suite",
-    "description": "A collection classes and traits that will make you Laravel workflow even more awesome!",
+    "description": "A collection of classes and traits that will make you Laravel API workflow even more awesome!",
     "type": "library",
     "license": "MIT",
     "authors": [

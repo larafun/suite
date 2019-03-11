@@ -1,0 +1,18 @@
+site_name: Larafun Suite
+site_url: https://github.com/larafun/suite
+site_description: A collection of classes and traits that will make you Laravel API workflow even more awesome!
+site_author: Bogdan Cismariu
+
+repo_url: https://github.com/larafun/suite
+edit_uri: ""
+
+theme:
+    name: readthedocs
+
+nav:
+    - Home: 'index.md'
+    - Concepts: 'concepts.md'
+    - Customization: 'customization.md'
+
+plugins:
+    - search
