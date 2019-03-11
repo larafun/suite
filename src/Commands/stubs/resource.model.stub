@@ -7,7 +7,7 @@ use Larafun\Suite\Resources\Resource;
 
 class DummyClass extends Resource
 {
-    public function item(DummyModelClass $DummyModelVariable)
+    public function item($DummyModelVariable)
     {
         return $DummyModelVariable->toArray();
     }

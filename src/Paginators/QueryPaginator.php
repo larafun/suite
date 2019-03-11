@@ -3,31 +3,61 @@
 namespace Larafun\Suite\Paginators;
 
 use DB;
-use Larafun\Suite\Contracts\Paginator;
+use Larafun\Suite\Contracts\CountPaginator;
 use Larafun\Suite\Contracts\Queryable;
 use Illuminate\Database\Query\Builder;
 
-class QueryPaginator implements Paginator
+class QueryPaginator implements CountPaginator
 {
+    /**
+     * The current database results
+     */
+    protected $data;
+
+    /**
+     * The query that was performed to collect the data
+     * and that will be rebuilt in order to count the
+     * number of records from the database
+     */
     protected $query;
 
+    /**
+     * The number of results that have been requested
+     * from the database
+     */
     protected $take = null;
 
+    /**
+     * The number of results that have been skiped
+     * from the database
+     */
     protected $skip = null;
 
+    /**
+     * The total number of records in database
+     */
     protected $count = null;
 
+    /**
+     * The current page number
+     */
     protected $page = null;
 
-    protected $size = null;
-
+    /**
+     * The total number of pages
+     */
     protected $pages = null;
+
 
     public function __construct(Queryable $data)
     {
+        $this->data = $data;
         $this->query = clone $data->getQuery();
     }
 
+    /**
+     * Compute the current page number
+     */
     public function page()
     {
         if (! is_null($this->page)) {
@@ -39,11 +69,17 @@ class QueryPaginator implements Paginator
         return $this->page = (int) floor($this->skip() / $this->size()) + 1;
     }
 
+    /**
+     * Alias for take
+     */
     public function size()
     {
         return $this->take();
     }
 
+    /**
+     * The number of results that has been requested from the database
+     */
     public function take()
     {
         if (! is_null($this->take)) {
@@ -52,6 +88,9 @@ class QueryPaginator implements Paginator
         return $this->take = (int) ($this->query->limit ?? PHP_INT_MAX);
     }
 
+    /**
+     * The number of results that were skipped from the database
+     */
     public function skip()
     {
         if (! is_null($this->skip)) {
@@ -60,6 +99,9 @@ class QueryPaginator implements Paginator
         return $this->skip = (int) ($this->query->offset ?? 0);
     }
 
+    /**
+     * The total number of pages
+     */
     public function pages()
     {
         if (! is_null($this->pages)) {
@@ -71,6 +113,9 @@ class QueryPaginator implements Paginator
         return $this->pages = (int) floor($this->count() / $this->size()) + 1;
     }
 
+    /**
+     * The total number of results in the database
+     */
     public function count()
     {
         if (! is_null($this->count)) {
@@ -90,6 +135,9 @@ class QueryPaginator implements Paginator
         ;
     }
 
+    /**
+     * The pagination information
+     */
     public function pagination(): array
     {
         return [

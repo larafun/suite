@@ -122,7 +122,7 @@ We aim for the following functionalities
 
 
 ### Discovered when writing docs
- - PostResource->item cannot type hint, as it's not conform with the parent implementation
+
  - Pagination should have its own keys parent keys (inside the paginator or inside the resource...)
  
 

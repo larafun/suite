@@ -80,7 +80,62 @@ Now, both your `show` and `index` methods on the `PostController` will return th
 
 ## Adding relationships
 
+We now want to be able to include author information with each `Post`. First, we need to extend the default `User` model so that it can benefit from the Larafun Suite package.
 
+Add the `Resourceable` and `Responsable` interfaces and use the `ResourceableTrait` and `SuitableTrait` on the Model: 
 
+```php
+
+namespace App\Models;
+
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Larafun\Suite\Contracts\Resourceable;
+use Illuminate\Contracts\Support\Responsable;
+use Larafun\Suite\Traits\ResourceableTrait;
+use Larafun\Suite\Traits\SuitableTrait;
+
+class User extends Authenticatable implements Responsable, Resourceable
+{
+    use Notifiable, ResourceableTrait, SuitableTrait;
+
+```
+
+---
+
+Now, we will create a `Resource` for the `User`:
+
+`php artisan build:resource UserResource --model=App\\Models\\User`
+
+```php
+class UserResource extends Resource
+{
+    public function item($user)
+    {
+        return [
+            'id'    => $user->id,
+            'name'  => $user->name,
+        ];
+    }
+}
+```
+
+Once we have the `UserResource` we can use it inside our `PostResource`:
+
+```php
+class PostResource extends Resource
+{
+    public function item($post)
+    {
+        return [
+            'id'        => $post->id,
+            'author'    => $this->deepen(UserResource::make($post->author)),
+            'title'     => $post->title,
+            'summary'   => Str::limit($post->body, 20)
+        ];
+    }
+}
+```
 
 
