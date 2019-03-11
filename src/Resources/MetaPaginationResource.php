@@ -8,7 +8,7 @@ namespace Larafun\Suite\Resources;
  */
 class MetaPaginationResource extends Resource
 {
-    protected function pagination()
+    protected function pagination(): array
     {
         return [
             'meta' => [

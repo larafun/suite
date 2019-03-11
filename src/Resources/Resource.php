@@ -61,7 +61,7 @@ class Resource extends BaseResource
      * Extend this method if you want your pagination information to reside
      * into custom keys.
      */
-    protected function pagination()
+    protected function pagination(): array
     {
         if ($this->resource instanceof Paginatable) {
             return $this->resource->getPaginator()->pagination();
@@ -166,7 +166,7 @@ class Resource extends BaseResource
     }
 
     /**
-     * Set's the remaining depth. If too low, it replaces the resource with a
+     * Sets the remaining depth. If too low, it replaces the resource with a
      * Missing value to stop propagating infinitely.
      */
     public function setRemainingDepth($depth) {
@@ -178,7 +178,7 @@ class Resource extends BaseResource
     }
 
     /**
-     * Return a new resource with a reduced depth.
+     * Returns a new resource with a reduced depth.
      */
     protected function deepen($resource)
     {
