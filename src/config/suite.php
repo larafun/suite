@@ -12,7 +12,7 @@ return [
          * The default behaviour can be acheived using:
          *  Illuminate\Database\Eloquent\Collection::class
          */
-        'collection'    => Larafun\Suite\Collection\PresentableCollection::class,
+        'collection'    => Larafun\Suite\Collection\ResourceableCollection::class,
 
         /**
          * This is the default builder that the Eloquent model will use to

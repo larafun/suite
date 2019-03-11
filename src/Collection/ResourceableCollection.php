@@ -9,18 +9,15 @@ use Larafun\Suite\Contracts\Paginatable;
 use Larafun\Suite\Traits\QueryableTrait;
 use Larafun\Suite\Traits\PaginatableTrait;
 use Larafun\Suite\Traits\ResourceableTrait;
+use Larafun\Suite\Traits\InterceptedTrait;
 use Illuminate\Contracts\Support\Responsable;
-use Larafun\Suite\Resources\CollectionResource;
-use Larafun\Suite\Resources\Resource;
-use Larafun\Suite\Paginators\QueryPaginator;
-use App\Http\Resources\Book;
 
-class PresentableCollection extends Collection implements
+class ResourceableCollection extends Collection implements
     Queryable,
     Responsable,
     Paginatable
 {
-    use QueryableTrait, PaginatableTrait, ResourceableTrait;
+    use QueryableTrait, PaginatableTrait, ResourceableTrait, InterceptedTrait;
 
     public function toResponse($request)
     {
@@ -45,5 +42,10 @@ class PresentableCollection extends Collection implements
             return $first->getResource();
         }
         return PlainResource::class;
+    }
+
+    public function keyBy($keyBy)
+    {
+        return $this->toBase()->keyBy($keyBy);
     }
 }

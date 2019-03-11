@@ -10,7 +10,7 @@ use Larafun\Suite\Contracts\Paginatable;
 class Resource extends BaseResource
 {
     protected $max_depth = 3;
-    protected $depth = 1;
+    protected $remaining_depth;
     protected $request;
     protected $shouldCollect = null;
 
@@ -21,7 +21,7 @@ class Resource extends BaseResource
 
     public function with($request)
     {
-        return array_merge(
+        return array_merge_recursive(
             $this->with,
             $this->pagination()
         );
@@ -87,12 +87,20 @@ class Resource extends BaseResource
 
     public static function resource($resource)
     {
-        return new static($resource);
+        return (new static($resource))->asItem();
     }
 
-    public function setDepth($depth) {
-        $this->depth = $depth;
-        if ($this->depth > $this->max_depth) {
+    protected function collect($resource)
+    {
+        if ($resource instanceof Collection) {
+            return $resource;
+        }
+        return collect($resource);
+    }
+
+    public function setRemainingDepth($depth) {
+        $this->remaining_depth = $depth;
+        if ($this->remaining_depth < 1) {
             $this->resource = new MissingValue;
         }
         return $this;
@@ -100,6 +108,7 @@ class Resource extends BaseResource
 
     protected function deepen(Resource $resource)
     {
-        return $resource->setDepth($this->depth + 1);
+        $remaining = $this->remaining_depth ?: $this->max_depth;
+        return $resource->setRemainingDepth($remaining - 1);
     }
 }
