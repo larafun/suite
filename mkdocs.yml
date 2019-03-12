@@ -9,5 +9,11 @@ edit_uri: ""
 theme:
     name: readthedocs
 
+nav:
+    - Home: 'index.md'
+    - Concepts: 'concepts.md'
+    - Sample Application: 'sample.md'
+    - Customization: 'customization.md'
+
 plugins:
     - search
