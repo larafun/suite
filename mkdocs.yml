@@ -9,7 +9,7 @@ edit_uri: ""
 theme:
     name: readthedocs
 
-nav:
+pages:
     - Home: 'index.md'
     - Concepts: 'concepts.md'
     - Sample Application: 'sample.md'
