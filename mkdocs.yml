@@ -13,6 +13,7 @@ pages:
     - Home: 'index.md'
     - Concepts: 'concepts.md'
     - Sample Application: 'sample.md'
+    - Filters: 'filters.md'
     - Query Builder: 'builder.md'
     - Customization: 'customization.md'
 

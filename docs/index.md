@@ -4,7 +4,7 @@ A collection of classes and traits that will make your Laravel API workflow even
 
 The Larafun Suite package allows to define default [Resources](concepts#resources) that will decorate your Models or Elquent Collections, so that you can directly return your objects from the Controllers.
 
-Once you define your decorating Resource inside your model:
+Start by defining a default Resource on your Model.
 
 ```php
 
