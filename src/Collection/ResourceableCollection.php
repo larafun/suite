@@ -16,6 +16,7 @@ use Larafun\Suite\Resources\PlainResource;
 class ResourceableCollection extends Collection implements
     Queryable,
     Responsable,
+    Resourceable,
     Paginatable
 {
     use QueryableTrait, PaginatableTrait, ResourceableTrait, InterceptedTrait;
@@ -43,10 +44,5 @@ class ResourceableCollection extends Collection implements
             return $first->getResource();
         }
         return PlainResource::class;
-    }
-
-    public function keyBy($keyBy)
-    {
-        return $this->toBase()->keyBy($keyBy);
     }
 }
