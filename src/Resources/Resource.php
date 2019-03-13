@@ -166,6 +166,14 @@ class Resource extends BaseResource
     }
 
     /**
+     * Returns a Collection representation of the underlying resource
+     */
+    protected function collected()
+    {
+        return $this->collect($this->resource);
+    }
+
+    /**
      * Sets the remaining depth. If too low, it replaces the resource with a
      * Missing value to stop propagating infinitely.
      */

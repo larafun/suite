@@ -5,7 +5,6 @@ namespace Larafun\Suite\Paginators;
 use DB;
 use Larafun\Suite\Contracts\CountPaginator;
 use Larafun\Suite\Contracts\Queryable;
-use Illuminate\Database\Query\Builder;
 
 class QueryPaginator implements CountPaginator
 {
@@ -110,7 +109,7 @@ class QueryPaginator implements CountPaginator
         if (! $this->size()) {
             return $this->pages = 1;
         }
-        return $this->pages = (int) floor($this->count() / $this->size()) + 1;
+        return $this->pages = (int) ceil($this->count() / $this->size());
     }
 
     /**

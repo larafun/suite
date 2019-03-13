@@ -11,7 +11,7 @@ use Larafun\Suite\Traits\PaginatableTrait;
 use Larafun\Suite\Traits\ResourceableTrait;
 use Larafun\Suite\Traits\InterceptedTrait;
 use Illuminate\Contracts\Support\Responsable;
-use Larafun\Suite\Resources\PlainResource;
+use Larafun\Suite\Resources\MetaPaginationResource;
 
 class ResourceableCollection extends Collection implements
     Queryable,
@@ -43,6 +43,6 @@ class ResourceableCollection extends Collection implements
         if ($first instanceof Resourceable) {
             return $first->getResource();
         }
-        return PlainResource::class;
+        return config('suite.collection.resource', MetaPaginationResource::class);
     }
 }

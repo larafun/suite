@@ -28,13 +28,25 @@ class ResourceableCollectionTest extends DataTestCase
     /** @test */
     public function itPresentsTheCollection()
     {
-        factory(Book::class, 2)->create();
-        $collection = Book::all();
+        factory(Book::class, 20)->create();
+        $collection = Book::take(2)->skip(3)->get();
 
         $response = $collection->toResponse(null);
         $presented = json_decode($response->getContent());
 
+        // it presents the data
         $this->assertObjectHasAttribute('data', $presented);
         $this->assertCount(2, $presented->data);
+
+        // it has the pagination
+        $this->assertObjectHasAttribute('meta', $presented);
+        $this->assertObjectHasAttribute('pagination', $presented->meta);
+
+        $this->assertArraySubset([
+                        'size'  => 2,
+                        'page'  => 2,
+                        'total' => 20,
+                        'total_pages'   => 10
+                    ], (array) $presented->meta->pagination);
     }
 }

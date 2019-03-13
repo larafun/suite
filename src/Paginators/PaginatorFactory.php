@@ -22,7 +22,7 @@ class PaginatorFactory
     protected static function getDefaultPaginator($data = null)
     {
         if (($data instanceof Collection) && ($data instanceof Queryable)) {
-            return config('suite.collection.paginator', QueryPaginator::class);
+            return config('suite.collection.paginator', CountPaginator::class);
         }
         return NullPaginator::class;
     }

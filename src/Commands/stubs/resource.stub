@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use Larafun\Suite\Resources\Resource;
+use DefaultResourceFullClass;
 
-class DummyClass extends Resource
+class DummyClass extends DefaultResourceClass
 {
     public function item($model)
     {

@@ -2,7 +2,7 @@
 
 namespace Larafun\Suite\Traits;
 
-use Larafun\Suite\Resources\PlainResource;
+use Larafun\Suite\Resources\MetaPaginationResource;
 
 trait ResourceableTrait
 {
@@ -32,6 +32,6 @@ trait ResourceableTrait
      */
     public function getResource()
     {
-        return PlainResource::class;
+        return config('suite.model.resource', MetaPaginationResource::class);
     }
 }

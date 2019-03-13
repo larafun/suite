@@ -16,4 +16,11 @@ class DataTestCase extends TestCase
             '--path' => realpath(__DIR__.'/database/migrations'),
         ]);
     }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Larafun\Suite\ServiceProvider::class
+        ];
+    }
 }

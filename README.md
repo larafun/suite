@@ -60,52 +60,12 @@ Otherwise you can fine tune your setup inside `config/suite.php`, after you publ
 
 These things should be added:
 
-- [ ] Meta Aware Presentables
-- [ ] Paginators position (inside meta or at root level)
-- [ ] Customizable meta and data keys (presenter level, presentable level, app level)
-- [ ] Artisan commands to make Transformers and Presenters
-- [ ] Global meta awareness
-- [ ] Configurable defaults for: Presenter keys, global Meta
 - [ ] Add Validation to Filters
 - [ ] Add Formatters to Filters
+- [ ] Add Sanitizers to Filters
+- [ ] Change Filters behaviour to allow keys that do not have any defined defaults
+- [ ] Allow Filters to override values after instatiation
 - [ ] Split Filters into a separate package
-
-## Refactoring
-
-We aim for the following functionalities
-
- - [ ] Respond with models
- - [ ] Respond with paginatable Eloquent collections
- - [ ] An easy way to paginate DB queries
- - [ ] An easy way to change the default behaviour:
-    - meta keys
-    - data keys
-    - pagination keys
-    - pagination position
-    - default transformer
-    - default paginator
-    - default Eloquent Collection
- - [ ] An easy way to build files
-    - models
-    - filters
-    - resources
-- [ ] Grooming
-    - Rename the Eloquent Collection
-    - ResourceableTrait: Use a configurable resource
-      - Use the Resourceable trait in the Collection?
-    - Builder: registerRealScopes
-    - Query Builder: register macro to return a Resourceable Collection
-    - Drop the Queryable Trait?
-    - Drop the Paginatable Trait?
-    - Drop the ResourceCollection and CollectionResource in favour of Resource
-    - Do we need the PaginationFactory?
-    - Filters add Formatters and Sanitizers
-    - Contracts - do we need them all?
-    - config - check comments and adapt
-    - check that all commands are working properly
-    - PresentableCollection - rename it
-    - composer - check that all dependencies are met
-    - have a custom Resource to be used when generating new Resources
 
 - [ ] Tests
     - ResourceableCollection
@@ -113,16 +73,7 @@ We aim for the following functionalities
     - Paginators
     - Resources
 
-- [ ] Find a good way to apply the paginator.
-- [ ] Fix the failing tests.
-    - Build tests for the new features
-
 - [ ] Read the docs
     - Add plenty of examples and use cases
 
-
-### Discovered when writing docs
-
- - Pagination should have its own keys parent keys (inside the paginator or inside the resource...)
- 
 

@@ -6,6 +6,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Larafun\Suite\Resources\MetaPaginationResource;
 
 class BuildResourceCommand extends GeneratorCommand
 {
@@ -65,6 +66,8 @@ class BuildResourceCommand extends GeneratorCommand
     {
         $replace = [];
 
+        $replace = $this->buildResourceReplacements($replace);
+
         if ($this->option('model')) {
             $replace = $this->buildModelReplacements($replace);
         }
@@ -90,6 +93,22 @@ class BuildResourceCommand extends GeneratorCommand
             'DummyFullModelClass' => $modelClass,
             'DummyModelClass' => class_basename($modelClass),
             'DummyModelVariable' => lcfirst(class_basename($modelClass)),
+        ]);
+    }
+
+    /**
+     * Build the resource replacement values.
+     *
+     * @param  array  $replace
+     * @return array
+     */
+    protected function buildResourceReplacements(array $replace)
+    {
+        $resourceClass = config('suite.model.resource', MetaPaginationResource::class);
+
+        return array_merge($replace, [
+            'DefaultResourceFullClass'  => $resourceClass,
+            'DefaultResourceClass'  => class_basename(($resourceClass))
         ]);
     }
 

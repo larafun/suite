@@ -3,11 +3,11 @@
 namespace DummyNamespace;
 
 use DummyFullModelClass;
-use Larafun\Suite\Resources\Resource;
+use DefaultResourceFullClass;
 
-class DummyClass extends Resource
+class DummyClass extends DefaultResourceClass
 {
-    public function item($DummyModelVariable)
+    public function item(DummyModelClass $DummyModelVariable)
     {
         return $DummyModelVariable->toArray();
     }

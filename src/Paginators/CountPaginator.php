@@ -2,9 +2,6 @@
 
 namespace Larafun\Suite\Paginators;
 
-use DB;
-use Larafun\Suite\Contracts\Queryable;
-
 class CountPaginator extends QueryPaginator
 {
     /**

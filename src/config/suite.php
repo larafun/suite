@@ -25,23 +25,23 @@ return [
         'builder'       => Larafun\Suite\Builder::class,
 
         /**
-         * The default Presenter that the Presentable Models will use
+         * The default Resource that the Resourceable Models will use
          * 
          * The default behaviour can be acheived using:
-         *  Larafun\Suite\Presenters\PlainPresenter::class
+         *  Larafun\Suite\Resources\PlainResource::class
          */
-        'resource'      => Larafun\Suite\Resources\Resource::class,
+        'resource'      => Larafun\Suite\Resources\MetaPaginationResource::class,
     ],
 
     'collection' => [
         
         /**
-         * The default Presenter that the Presentable Collections will use
+         * The default Resource that the Resourceable Collections will use
          * 
          * The default behaviour can be acheived using:
-         *  Larafun\Suite\Presenters\PlainPresenter::class
+         *  Larafun\Suite\Resources\PlainResource::class
          */
-        'resource' => Larafun\Suite\Resources\Resource::class,
+        'resource' => Larafun\Suite\Resources\MetaPaginationResource::class,
 
         /**
          * The default Paginator that the Queryable Collections will use
@@ -49,7 +49,7 @@ return [
          * The default behaviour can be acheived using:
          *  Larafun\Suite\Paginators\NullPaginator::class
          */
-        'paginator' => Larafun\Suite\Paginators\QueryPaginator::class,
+        'paginator' => Larafun\Suite\Paginators\CountPaginator::class,
     ],
 
     /**
