@@ -2,21 +2,19 @@
 
 To better demonstrate the usage of different modules that make up this package we will use a sample application that will cover various needs.
 
-The app will consist of these models: `User`, `Post`, `Comment`.
+The app will consist of these models: `Author`, `Post`, `Comment`.
 
 ## Installation and Setup
 
 ```bash
-laravel new sample \
-&& cd sample \
+laravel new project \
+&& cd project \
 && composer require larafun/suite
 ```
 
 Create a database for this project and update your `.env` file accordingly.
 
-*We moved the `User` inside the `App\Models` namespace. (changes needed to be made in the User class, in config/auth.php and in UserFactory.php*
-
-## First custom model
+## Posts
 
 `php artisan build:model Post -a`
 
@@ -29,113 +27,195 @@ This will create for us the following:
 * `App\Filters\PostFilter`
 * `App\Http\Resources\PostResource`
 
-Build the migration and factory so that they have the following fields: `author_id`, `title`, `body`.
-
-Add your routes in `routes/api.php`: `Route::apiResource('posts', 'Api\\PostController')`.
-
-Inside your `Api\PostController` handle the `index` method:
+**The Post Model**
 
 ```php
-public function index()
+class Post extends Model
 {
-    return Post::all();
+    use ValidatableTrait;
+
+    protected $fillable = [
+        'author_id',
+        'title',
+        'body'
+    ];
+
+    /**
+     * Rules
+     */
+    public function savingRules()
+    {
+        return [
+            'author_id'     => 'required|numeric',
+            'title'         => 'required|min:2',
+            'body'          => 'required|min:5'
+        ];
+    }
+
+    /**
+     * Relationships
+     */
+    public function author()
+    {
+        return $this->belongsTo(Author::class, 'author_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id');
+    }
+
+    /**
+     * Query scopes
+     */
+    public function scopeFilter($query, PostFilter $filter)
+    {
+        return $query
+            ->writtenBy($filter->$author_ids)
+            ->containing($filter->search)
+            ->skip($filter->page * $filter->size)
+            ->take($filter->size)
+        ;
+    }
+
+    public function realScopeWrittenBy($query, $author_ids)
+    {
+        return $query->whereIn('author_id', $author_ids);
+    }
+
+    public function realScopeContaining($query, $search)
+    {
+        return $query->where(function ($query) {
+            return $query->where('title', 'like', "%$search%")
+                ->orWhere('body', 'like', "%$search%");
+        });
+    }
+
+    /**
+     * Presentation
+     */
+    public function getResource()
+    {
+        return PostResource::class;
+    }
 }
 ```
 
-When calling this method you will instantly see that the results are automatically wrapped around a `data` key and that `pagination` is included out of the box for you.
-
----
-
-Let's now return a `Post`:
+**The Post Controller**
 
 ```php
-public function show(Post $post)
+class PostController extends Controller
 {
-    return $post;
+    /**
+     * $filter will be automatically constructed with the
+     * request parameters
+     */
+    public function index(BookFilter $filter)
+    {
+        /**
+         * This will return a json response with pagination information
+         */
+        return Post::filter($filter)->get();
+    }
+
+    public function store(Request $request)
+    {
+        /**
+         * Validation occurs when actually creating the Post
+         * If any errors are found, a ValidationException will be thrown
+         */
+        return Post::create($request->all());
+    }
+
+    public function show(Post $post)
+    {
+        /**
+         * The resource will be automatically transformed with the rules
+         * defined in the PostResource
+         */
+        return $post;
+    }
+
+    public function update(Post $post, Request $request)
+    {
+        /**
+         * Validation occurs when updating the resource according
+         * to the rules specified on the Model
+         */
+        return $post->update($request->all());
+    }
+
+    // ...
 }
 ```
 
-The response will also be wrapped around a `data` key.
-
----
-
-To change the way the `Post` is presented, change your `App\Http\Resources\PostResource`:
+**The Post Resource**
 
 ```php
 class PostResource extends Resource
 {
-    public function item($post)
+    /**
+     * Relations will stop loading after this depth.
+     * This way infinite loops or extra large
+     * responses may be avoided.
+     * The deepen() method needs to be used on these
+     * relations for this behavior the take effect
+     */
+    protected $max_depth = 3;
+
+    public function boot()
+    {
+        /**
+         * This resource may be used on a Model or on a Collection.
+         * Using collected() we can wrap the Model in a Collection.
+         */
+        $posts = $this->collected();
+        
+        /**
+         * The eager loading takes place only when booting the Resource.
+         * This will happen when the app is ready to respond and the
+         * response is ready to be built.
+         */
+        $posts->load('author', 'comments');
+    }
+
+    public function item(Post $post)
     {
         return [
             'id'        => $post->id,
-            'author_id' => $post->author_id,
+            'author'    => $this->deepen($post->author),
             'title'     => $post->title,
-            'summary'   => Str::limit($post->body, 20)
+            'body'      => $post->body,
+            'comments'  => $this->deepen($post->comments)
         ];
     }
 }
 ```
 
-Now, both your `show` and `index` methods on the `PostController` will return the data transformed accordingly.
-
-## Adding relationships
-
-We now want to be able to include author information with each `Post`. First, we need to extend the default `User` model so that it can benefit from the Larafun Suite package.
-
-Add the `Resourceable` and `Responsable` interfaces and use the `ResourceableTrait` and `SuitableTrait` on the Model: 
-
+**The Post Filter**
 ```php
-
-namespace App\Models;
-
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Larafun\Suite\Contracts\Resourceable;
-use Illuminate\Contracts\Support\Responsable;
-use Larafun\Suite\Traits\ResourceableTrait;
-use Larafun\Suite\Traits\SuitableTrait;
-
-class User extends Authenticatable implements Responsable, Resourceable
+class PostFilter extends Filter
 {
-    use Notifiable, ResourceableTrait, SuitableTrait;
-
-```
-
----
-
-Now, we will create a `Resource` for the `User`:
-
-`php artisan build:resource UserResource --model=App\\Models\\User`
-
-```php
-class UserResource extends Resource
-{
-    public function item($user)
+    public function defaults(): array
     {
         return [
-            'id'    => $user->id,
-            'name'  => $user->name,
+            'search'        => null,        // searching through title and body
+            'author_ids'    => [],          // only posts written by the given authors
+            'page'          => 0,
+            'size'          => 20
         ];
     }
-}
-```
 
-Once we have the `UserResource` we can use it inside our `PostResource`:
-
-```php
-class PostResource extends Resource
-{
-    public function item($post)
+    /**
+     * This method is optional, but when defined, it will apply the rules 
+     * against the constructor arguments
+     */
+    public function rules(): array
     {
         return [
-            'id'        => $post->id,
-            'author'    => $this->deepen(UserResource::make($post->author)),
-            'title'     => $post->title,
-            'summary'   => Str::limit($post->body, 20)
+            'size'  => 'numeric|max:100',   // avoid sending too large responses
         ];
     }
 }
 ```
-
 

@@ -1,5 +1,14 @@
 # Larafun Suite
-A small collection of classes and traits that will make your Laravel development even more awesome!
+
+[![Build Status](https://travis-ci.org/larafun/suite.svg?branch=master)](https://travis-ci.org/larafun/suite)
+[![Docs Status](https://readthedocs.org/projects/larafun-suite/badge/?version=latest)](https://larafun-suite.readthedocs.io)
+[![Latest Stable Version](https://poser.pugx.org/larafun/suite/v/stable)](https://packagist.org/packages/larafun/suite)
+[![License](https://poser.pugx.org/larafun/suite/license)](https://packagist.org/packages/larafun/suite)
+[![Total Downloads](https://poser.pugx.org/larafun/suite/downloads)](https://packagist.org/packages/larafun/suite)
+
+A small collection of classes and traits that will make your Laravel API development even more awesome!
+
+Check out the full documentation in here [https://larafun-suite.readthedocs.io](https://larafun-suite.readthedocs.io)
 
 ## Installation
 
@@ -66,14 +75,4 @@ These things should be added:
 - [ ] Change Filters behaviour to allow keys that do not have any defined defaults
 - [ ] Allow Filters to override values after instatiation
 - [ ] Split Filters into a separate package
-
-- [ ] Tests
-    - ResourceableCollection
-    - Commands
-    - Paginators
-    - Resources
-
-- [ ] Read the docs
-    - Add plenty of examples and use cases
-
 

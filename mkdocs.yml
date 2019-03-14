@@ -13,8 +13,12 @@ pages:
     - Home: 'index.md'
     - Concepts: 'concepts.md'
     - Sample Application: 'sample.md'
+    - Resources: 'resources.md'
     - Filters: 'filters.md'
-    - Query Builder: 'builder.md'
+    - Model Validation: 'validatable.md'
+    - Query Resources: 'builder.md'
+    - Pagination: 'pagination.md'
+    - Generators: 'generators.md'
     - Customization: 'customization.md'
 
 plugins:

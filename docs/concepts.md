@@ -10,14 +10,15 @@ Use the following command to generate a Larafun Suite Resource:
 
 ## Filters
 
-Filters are meant to be used as containers for all parameters that you use in order to query a Model. They can be typehinted in a Controller method and they will be automatically filled with the request data, if present. You can easily define default values for parameters that are not present in the request.
+Filters provide an easy way to instantiate and type hint a set of parameters. They will also validate their values and use predefined defaults when not values are not provided.
 
-One other advantage for using filters is that you can use them in contexts that do not rely on the HTTP Request to pass the query parameters, such as in Commands. They work seamlessly when used with query scopes.
-
+We list below a simple scenario. Please consult the more detailed section on [Filters](/filters).
 ```php
-
 class BookController extends Controller
 {
+    /**
+     * The filter is instantiated using the values from the Request
+     */
     public function index(BookFilter $filter)
     {
         return Book::filter($filter)->get();
@@ -26,9 +27,11 @@ class BookController extends Controller
 ```
 
 ```php
-
 class BookFilter extends Filter
 {
+    /**
+     * When certain values are missing, the defaults will be used
+     */
     public function defaults(): array
     {
         return [
@@ -45,6 +48,9 @@ class BookFilter extends Filter
 
 class Book extends Model
 {
+    /**
+     * The $filter object can now be type hinted into the Model scopes
+     */
     public function scopeFilter($query, BookFilter $filter)
     {
         return $query
@@ -73,13 +79,13 @@ The Larafun Suite Paginators are custom objects and don't rely on Laravel's defa
 
 In addition, the Larafun Suite Paginators will execute the `count` query only when responding with a resource that needs to be paginated, instead of when collecting the results from the database as the default Laravel paginators.
 
-By default, Eloquent Collections for models that extend the `Larafun\Suite\Model` will include a Paginator.
+Eloquent Collections for models that extend the `Larafun\Suite\Model` will allways include a Paginator. You can define your own to replace the default or use the `NullPaginator` provided with the package if you don't want to use Pagination on your Collections.
 
 ## Real Scopes
 
-[Laravel local query scopes](https://laravel.com/docs/5.8/eloquent#query-scopes) are a great way to define constraints to be used when querying your Models. Sometimes, you need to apply a scope only when a given parameter is not empty and Laravel allows you to use `when` conditional clause to check that inside your scope.
+[Laravel local query scopes](https://laravel.com/docs/5.8/eloquent#query-scopes) are a great way to define constraints to be used when querying your Models. Sometimes, you need to apply a scope only when a given parameter is not empty and Laravel allows you to use the `when()` conditional clause to check that inside your scope.
 
-On the other hand, Real Scopes apply only when none of the parameters are empty. This allows easier to define and to read scopes.
+On the other hand, Real Scopes apply only when none of the parameters are empty. This allows the creation of scopes that are much more easier to define and read.
 
 ```php
 
