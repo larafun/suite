@@ -1,3 +1,5 @@
+#Larafun Suite
+
 A collection of classes and traits that will make your Laravel API workflow even more awesome!
 
 ## General description

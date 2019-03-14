@@ -8,7 +8,7 @@
 
 A small collection of classes and traits that will make your Laravel API development even more awesome!
 
-Check out the full documentation in here [https://larafun-suite.readthedocs.io](https://larafun-suite.readthedocs.io)
+Check out the full documentation in here [larafun-suite.readthedocs.io](https://larafun-suite.readthedocs.io)
 
 ## Installation
 
@@ -69,7 +69,7 @@ Otherwise you can fine tune your setup inside `config/suite.php`, after you publ
 
 These things should be added:
 
-- [ ] Add Validation to Filters
+- [x] Add Validation to Filters
 - [ ] Add Formatters to Filters
 - [ ] Add Sanitizers to Filters
 - [ ] Change Filters behaviour to allow keys that do not have any defined defaults
