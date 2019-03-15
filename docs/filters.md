@@ -39,8 +39,7 @@ class BookFilter extends Filter
 }
 ```
 
-Even though the Request may contain additional parameters, only the fields defined by the `defaults()` method will be considered when instantiating the Filter.
-This behaviour is desirable so that developers won't rely on properties that have not been defined and documented.
+Even though the Filter may accept additional parameters than the ones defined by the `defaults()` method, this behaviour should be avoided so that developers won't rely on properties that have not been defined and documented.
 
 ## Validation rules
 

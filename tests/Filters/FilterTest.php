@@ -22,4 +22,22 @@ class FilterTest extends TestCase
         $filter = new FilterStub(['bar' => 'baz']);
         $this->assertInstanceOf(AbstractFilter::class, $filter);
     }
+
+    /** @test */
+    public function itCanUpdateField()
+    {
+        $filter = new FilterStub(['foo' => 'bar']);
+        $this->assertEquals('bar', $filter->foo);
+        $filter->foo = 'baz';
+        $this->assertEquals('baz', $filter->foo);
+    }
+
+    /** @test */
+    public function itValidatesOnUpdateField()
+    {
+        $filter = new FilterStub(['foo' => 'bar']);
+        
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+        $filter->foo = 'barbaz';
+    }
 }

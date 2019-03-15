@@ -16,7 +16,7 @@ class FilterStub extends Filter
     public function rules(): array
     {
         return [
-            'foo'       => 'required|string'
+            'foo'       => 'required|string|max:3'
         ];
     }
 }

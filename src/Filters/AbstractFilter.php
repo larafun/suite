@@ -37,9 +37,13 @@ abstract class AbstractFilter
         return $this->attributes;
     }
     
-    protected function validate(array $attributes = [])
+    protected function validate(array $attributes = [], array $rules = [])
     {
-        $validator = Validator::make($attributes, $this->rules());
+        if (empty($rules)) {
+            $rules = $this->rules();
+        }
+
+        $validator = Validator::make($attributes, $rules);
         if ($validator->fails()) {
             $this->failedValidation($validator);
         }
@@ -56,5 +60,13 @@ abstract class AbstractFilter
             return null;
         }
         return $this->attributes[$key];
+    }
+
+    public function __set($key, $value)
+    {
+        $this->validate([$key => $value], array_intersect_key($this->rules(), [$key => '']));
+        $this->attributes[$key] = $value;
+
+        return $value;
     }
 }

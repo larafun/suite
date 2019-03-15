@@ -72,7 +72,7 @@ These things should be added:
 - [x] Add Validation to Filters
 - [ ] Add Formatters to Filters
 - [ ] Add Sanitizers to Filters
-- [ ] Change Filters behaviour to allow keys that do not have any defined defaults
-- [ ] Allow Filters to override values after instatiation
+- [x] Change Filters behaviour to allow keys that do not have any defined defaults
+- [x] Allow Filters to override values after instatiation
 - [ ] Split Filters into a separate package
 
