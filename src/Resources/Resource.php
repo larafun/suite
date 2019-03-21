@@ -171,7 +171,7 @@ class Resource extends BaseResource
         if ($resource instanceof Collection) {
             return $resource;
         }
-        return collect($resource);
+        return collect([$resource]);
     }
 
     /**
