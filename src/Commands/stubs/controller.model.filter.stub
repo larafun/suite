@@ -51,7 +51,8 @@ class DummyClass extends Controller
      */
     public function update(Request $request, DummyModelClass $DummyModelVariable)
     {
-        return $DummyModelVariable->update($request->all());
+        $DummyModelVariable->update($request->all());
+        return $DummyModelVariable;
     }
 
     /**
@@ -62,6 +63,6 @@ class DummyClass extends Controller
      */
     public function destroy(DummyModelClass $DummyModelVariable)
     {
-        return $DummyModelVariable->delete();
+        $DummyModelVariable->delete();
     }
 }
