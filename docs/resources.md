@@ -195,7 +195,7 @@ Sometimes you may want additional information to be sent out to the response. Us
 ```php
 class DataResource extends Resource
 {
-    protected function append(): array
+    public function append(): array
     {
         return [
             'meta' => [
