@@ -188,6 +188,25 @@ If you want a consistent behaviour throughout your application, you can create a
 
 Larafun Suite also provides a `MetaPaginationResource` that includes the pagination details inside the `meta` property.
 
+## Append information
+
+Sometimes you may want additional information to be sent out to the response. Use the `append` method to define your data.
+
+```php
+class DataResource extends Resource
+{
+    protected function append(): array
+    {
+        return [
+            'meta' => [
+                'stamp' => microtime(true)
+            ]
+        ];
+    }
+}
+```
+
+
 ## Properties
 **Data**
 

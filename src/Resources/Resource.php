@@ -45,15 +45,24 @@ class Resource extends BaseResource
     }
 
     /**
-     * Additional information to send with the resource. If you want to extend this method,
-     * but also maintain pagination, make sure you include it in your method.
+     * Additional information to send with the resource. If you want to add additional
+     * information, you should use the append method.
      */
     public function with($request)
     {
         return array_merge_recursive(
             $this->with,
+            $this->append(),
             $this->pagination()
         );
+    }
+
+    /**
+     * Additional information that may be added to the response
+     */
+    public function append(): array
+    {
+        return [];
     }
 
     /**
