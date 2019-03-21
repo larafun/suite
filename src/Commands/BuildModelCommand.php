@@ -108,12 +108,20 @@ class BuildModelCommand extends GeneratorCommand
      */
     protected function createController()
     {
-        $controller = config('suite.path.controllers', 'Api') . '/' . $this->getNameInput() . 'Controller';
-        $this->call('make:controller', [
+        $controller = $this->getNameInput() . 'Controller';
+
+        $options = [
             'name' => $controller,
             '--model' => $this->getModelClass(),
-            '--api' => true
-        ]);
+        ];
+        
+        if ($this->option('filter')) {
+            $options = array_merge($options, [
+                '--filter'  => $this->getFilterClass()
+            ]);
+        }
+
+        $this->call('build:controller', $options);
     }
 
     /**

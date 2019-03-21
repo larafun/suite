@@ -26,6 +26,7 @@ class ServiceProvider extends IlluminateServiceProvider
                 Commands\BuildFilterCommand::class,
                 Commands\BuildModelCommand::class,
                 Commands\BuildResourceCommand::class,
+                Commands\BuildControllerCommand::class,
             ]);
         }
     }
