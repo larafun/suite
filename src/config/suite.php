@@ -5,6 +5,11 @@ return [
     'model' => [
 
         /**
+         * The default cache time in seconds. Can be overriden at model level using cacheTime.
+         */
+        'cache_time' => 60 * 60,
+
+        /**
          * This is the default collection that the Eloquent Query Builder will
          * use to hydrate the models into. It can be overridden at model
          * level using the newCollection() method.
