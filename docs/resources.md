@@ -127,22 +127,35 @@ When working with a lot of relations and including some of them in the Resource,
 Larafun Resources control this behaviour through the `$max_depth` property and the `deepen()` method.
 
 **Post**
+
+Pass the model and the relation you want loaded.
 ```php
 class PostResource extends Resource
 {
     protected $max_depth = 3;
+    
+    public function boot()
+    {
+        $posts = $this->collected();
+        
+        if ($this->depthIsInRange()) {
+            $posts->load('author');
+        }
+    }
 
     public function item(Post $post)
     {
         return [
             'id'        => $post->id,
-            'author'    => $this->deepen($post->author)
+            'author'    => $this->deepen($post, 'author')
         ];
     }
 }
 ```
 
 **Author**
+
+Or pass the relation directly (only if you are absolutely sure that the relation is *always* needed).
 ```php
 class AuthorResource extends Resource
 {

@@ -2,7 +2,9 @@
 
 namespace Larafun\Suite\Resources;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Larafun\Suite\Contracts\Paginatable;
 use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Http\Resources\Json\Resource as BaseResource;
@@ -23,7 +25,7 @@ class Resource extends BaseResource
     protected $shouldCollect = null;
 
     /**
-     * The maximum depth of other Resources to be included 
+     * The maximum depth of other Resources to be included
      */
     protected $max_depth = 3;
 
@@ -94,7 +96,7 @@ class Resource extends BaseResource
     }
 
     /**
-     * Custom Resources should implement the 'item' method. This approach has been used so 
+     * Custom Resources should implement the 'item' method. This approach has been used so
      * that the developer may type hint the parameter of the 'item' method.
      */
     public function buildItem($resource)
@@ -151,7 +153,7 @@ class Resource extends BaseResource
      * Build a Collection Resource
      */
     public static function collection($resource)
-    {       
+    {
         return (new static($resource))->asCollection();
     }
 
@@ -171,6 +173,9 @@ class Resource extends BaseResource
         if ($resource instanceof Collection) {
             return $resource;
         }
+        if ($resource instanceof Model) {
+            return new EloquentCollection([$resource]);
+        }
         return collect([$resource]);
     }
 
@@ -188,17 +193,38 @@ class Resource extends BaseResource
      */
     public function setRemainingDepth($depth) {
         $this->remaining_depth = $depth;
-        if ($this->remaining_depth < 1) {
-            $this->resource = new MissingValue;
-        }
         return $this;
+    }
+
+    /**
+     * Returns the remaining depth or max_depth if first call.
+     */
+    public function getRemainingDepth()
+    {
+        return $this->remaining_depth ?? $this->max_depth;
+    }
+
+    /**
+     * Checks if the last depth level was reached.
+     */
+    protected function depthIsInRange()
+    {
+        return ($this->getRemainingDepth() < 1);
     }
 
     /**
      * Returns a new resource with a reduced depth.
      */
-    protected function deepen($resource)
+    protected function deepen($resource, $relation = null)
     {
+        if (! $this->depthIsInRange()) {
+            return new MissingValue;
+        }
+
+        if (! is_null($relation)) {
+            $resource = $resource->{$relation};
+        }
+
         if ((! $resource instanceof Resource) && ($resource instanceof Resourceable)) {
             $resource = $resource->resource();
         }
@@ -207,7 +233,6 @@ class Resource extends BaseResource
             throw new \RuntimeException('Could not deepen the resource ' . get_class($resource));
         }
 
-        $remaining = $this->remaining_depth ?: $this->max_depth;
-        return $resource->setRemainingDepth($remaining - 1);
+        return $resource->setRemainingDepth($this->getRemainingDepth() - 1);
     }
 }
