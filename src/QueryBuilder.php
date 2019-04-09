@@ -28,6 +28,13 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
     protected $cacheTags;
 
     /**
+     * The model name
+     *
+     * @var string
+     */
+    protected $modelName;
+
+    /**
      * The cache driver to be used.
      *
      * @var string
@@ -49,9 +56,8 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
      */
     public function get($columns = ['*'])
     {
-        if ( ! is_null($this->cacheSeconds)) {
+        if (! is_null($this->cacheSeconds))
             return $this->getCached($columns);
-        }
 
         return parent::get($columns);
     }
@@ -64,9 +70,8 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
      */
     public function getCached($columns = ['*'])
     {
-        if (is_null($this->columns)) {
+        if (is_null($this->columns))
             $this->columns = $columns;
-        }
 
         // If the query is requested to be cached, we will cache it using a unique key
         // for this database connection and query statement, including the bindings
@@ -80,9 +85,8 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
         // If we've been given a DateTime instance or a "seconds" value that is
         // greater than zero then we'll pass it on to the remember method.
         // Otherwise we'll cache it indefinitely.
-        if ($seconds instanceof DateTime || $seconds > 0) {
+        if ($seconds instanceof DateTime || $seconds > 0)
             return $cache->remember($key, $seconds, $callback);
-        }
 
         return $cache->rememberForever($key, $callback);
     }
@@ -94,7 +98,7 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
      * @param  string  $key
      * @return $this
      */
-    public function remember(int $seconds = null, $key = null)
+    public function remember(int $seconds = null, string $key = null)
     {
         $seconds = $seconds ?? config('suite.model.cache_time');
 
@@ -109,7 +113,7 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
      * @param  string  $key
      * @return \Illuminate\Database\Query\Builder|static
      */
-    public function rememberForever($key = null)
+    public function rememberForever(string $key = null)
     {
         return $this->remember(-1, $key);
     }
@@ -139,7 +143,7 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
     /**
      * Indicate that the results, if cached, should use the given cache tags.
      *
-     * @param  array|mixed  $cacheTags
+     * @param  mixed  $cacheTags
      * @return $this
      */
     public function cacheTags($cacheTags)
@@ -155,7 +159,7 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
      * @param  string  $cacheDriver
      * @return $this
      */
-    public function cacheDriver($cacheDriver)
+    public function cacheDriver(string $cacheDriver)
     {
         $this->cacheDriver = $cacheDriver;
 
@@ -201,7 +205,7 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
      */
     public function getCacheKey()
     {
-        return $this->cachePrefix.':'.($this->cacheKey ?: $this->generateCacheKey());
+        return $this->cachePrefix.':'.$this->modelName.':'.($this->cacheKey ?: $this->generateCacheKey());
     }
 
     /**
@@ -217,22 +221,18 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
     }
 
     /**
-     * Flush the cache for the current model or a given tag name
+     * Flush the cache for the current model
      *
-     * @param  mixed  $cacheTags
      * @return boolean
      */
-    public function flushCache($cacheTags = null)
+    public function flushCache()
     {
         $cache = $this->getCacheDriver();
 
-        if ( ! method_exists($cache, 'tags')) {
+        if ( ! method_exists($cache, 'tags'))
             return false;
-        }
 
-        $cacheTags = $cacheTags ?: $this->cacheTags;
-
-        $cache->tags($cacheTags)->flush();
+        $cache->tags($this->cacheTags)->flush();
 
         return true;
     }
@@ -259,9 +259,23 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
      *
      * @return $this
      */
-    public function prefix($prefix)
+    public function prefix(string $prefix)
     {
         $this->cachePrefix = $prefix;
+
+        return $this;
+    }
+
+    /**
+     * Set the model name
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function modelName(string $name)
+    {
+        $this->modelName = $name;
 
         return $this;
     }
