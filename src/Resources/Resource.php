@@ -108,12 +108,25 @@ class Resource extends BaseResource
     }
 
     /**
+     * An easy way to define both collection responses and item responses in the same resource.
+     * Just define a collectionItem method and it will be used when the expected response
+     * is a Collection.
+     */
+    public function buildCollectionItem($resource)
+    {
+        if (method_exists($this, 'collectionItem')) {
+            return $this->collectionItem($resource);
+        }
+        return $this->buildItem($resource);
+    }
+
+    /**
      * Transforms each item of the Collection instead of transforming the Collection itself
      */
     public function map(Collection $resource)
     {
         return $resource->map(function ($value) {
-            return $this->buildItem($value);
+            return $this->buildCollectionItem($value);
         });
     }
 
