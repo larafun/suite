@@ -222,7 +222,7 @@ class Resource extends BaseResource
      */
     protected function depthIsInRange()
     {
-        return ($this->getRemainingDepth() < 1);
+        return ($this->getRemainingDepth() > 0);
     }
 
     /**
