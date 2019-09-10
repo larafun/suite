@@ -27,7 +27,7 @@ trait ValidatableTrait
     protected function applyValidationRules($method, Model $model)
     {
         $method = $method . 'Rules';
-        $validator = Validator::make($model->getAttributes(), $model->$method());
+        $validator = Validator::make($model->attributesToArray(), $model->$method());
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }
