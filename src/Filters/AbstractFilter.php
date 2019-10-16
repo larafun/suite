@@ -64,7 +64,9 @@ abstract class AbstractFilter
 
     public function __set($key, $value)
     {
-        $this->validate([$key => $value], array_intersect_key($this->rules(), [$key => '']));
+        if (array_key_exists($key, $this->rules())) {
+            $this->validate([$key => $value], array_intersect_key($this->rules(), [$key => '']));
+        }
         $this->attributes[$key] = $value;
 
         return $value;
