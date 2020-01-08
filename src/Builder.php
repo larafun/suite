@@ -7,6 +7,40 @@ use Larafun\Suite\Contracts\Queryable;
 
 class Builder extends EloquentBuilder
 {
+    public function find($id, $columns = ['*'])
+    {
+        //we don't cache findMany - no use, will be called separately anyway
+        if (is_array($id) || $id instanceof Arrayable) {
+            return $this->findMany($id, $columns);
+        }
+
+        if (! is_null($this->model->getCacheTime()) && $this->model->getSingleModelCache())
+            return $this->findCached($id, $columns);
+
+        return $this->whereKey($id)->first($columns);
+    }
+
+    protected function findCached($id, $columns = ['*'])
+    {
+        $key = $this->model->getSingleCacheKey($id);
+        $seconds = $this->model->getCacheTime();
+        $cache = $this->model->getCache();
+
+        $callback = $this->getCacheCallback($id, $columns);
+
+        if ($seconds instanceof DateTime || $seconds > 0)
+            return $cache->remember($key, $seconds, $callback);
+
+        return $cache->rememberForever($key, $callback);
+    }
+
+    protected function getCacheCallback($id, $columns)
+    {
+        return function () use ($id, $columns) {
+            $this->model->setCacheTime(null);
+            return $this->find($id, $columns);
+        };
+    }
 
     public function get($columns = ['*'])
     {
