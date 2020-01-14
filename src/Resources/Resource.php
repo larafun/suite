@@ -67,6 +67,18 @@ class Resource extends BaseResource
         return [];
     }
 
+    /*
+     * Allows us to pass any objects to be used in the resource
+     * */
+    public function pass(array $vars)
+    {
+        foreach ($vars as $varname => $var) {
+            $this->{$varname} = $var;
+        }
+
+        return $this;
+    }
+
     /**
      * This will gather the pagination information from your resource.
      * Extend this method if you want your pagination information to reside
