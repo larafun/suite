@@ -16,7 +16,7 @@ class QueryBuilder extends \Illuminate\Database\Query\Builder
      */
     public function get($columns = ['*'])
     {
-        if (! is_null($this->model->getCacheTime()) && empty($this->model->getSingleModelCache()))
+        if ($this->model && ! is_null($this->model->getCacheTime()) && empty($this->model->getSingleModelCache()))
             return $this->getCached($columns);
 
         return parent::get($columns);
