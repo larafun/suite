@@ -9,6 +9,7 @@ use Larafun\Suite\Contracts\Paginatable;
 use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Http\Resources\Json\Resource as BaseResource;
 use Larafun\Suite\Contracts\Resourceable;
+use Illuminate\Support\Str;
 
 class Resource extends BaseResource
 {
@@ -33,6 +34,11 @@ class Resource extends BaseResource
      * The remaining number of Resources that can be included
      */
     protected $remaining_depth;
+
+    /**
+     * Includes array merged with each item
+     */
+    protected $includes = [];
 
     /**
      * This method will be run prior to responding with the resource.
@@ -67,9 +73,9 @@ class Resource extends BaseResource
         return [];
     }
 
-    /*
+    /**
      * Allows us to pass any objects to be used in the resource
-     * */
+     */
     public function pass(array $vars)
     {
         foreach ($vars as $varname => $var) {
@@ -77,6 +83,41 @@ class Resource extends BaseResource
         }
 
         return $this;
+    }
+
+    /**
+     * Includes these properties
+     */
+    public function include(...$includes)
+    {
+        foreach ($includes as $include) {
+            $this->includes[] = $include;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Excludes these properties
+     */
+    public function exclude(...$excludes)
+    {
+        $this->includes = array_diff($this->includes, $excludes);
+
+        return $this;
+    }
+
+    /**
+     * Calls the include methods on the resource
+     */
+    protected function parseIncludes($resource): array
+    {
+        $includes = [];
+        foreach ($this->includes as $include) {
+            $includes = array_merge($includes, $this->{'include' . Str::studly($include)}($resource));
+        }
+
+        return $includes;
     }
 
     /**
@@ -114,7 +155,10 @@ class Resource extends BaseResource
     public function buildItem($resource)
     {
         if (method_exists($this, 'item')) {
-            return $this->item($resource);
+            return array_merge_recursive(
+                $this->item($resource),
+                $this->parseIncludes($resource)
+            );
         }
         return $resource;
     }
@@ -127,7 +171,10 @@ class Resource extends BaseResource
     public function buildCollectionItem($resource)
     {
         if (method_exists($this, 'collectionItem')) {
-            return $this->collectionItem($resource);
+            return array_merge_recursive(
+                $this->collectionItem($resource),
+                $this->parseIncludes($resource)
+            );
         }
         return $this->buildItem($resource);
     }
@@ -177,7 +224,7 @@ class Resource extends BaseResource
     /**
      * Build a Collection Resource
      */
-    public static function collection($resource)
+    public static function collection($resource): self
     {
         return (new static($resource))->asCollection();
     }
@@ -185,7 +232,7 @@ class Resource extends BaseResource
     /**
      * Build an item Resource
      */
-    public static function resource($resource)
+    public static function resource($resource): self
     {
         return (new static($resource))->asItem();
     }
