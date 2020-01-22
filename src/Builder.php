@@ -10,12 +10,14 @@ class Builder extends EloquentBuilder
     public function find($id, $columns = ['*'])
     {
         //we don't cache findMany - no use, will be called separately anyway
-        if (is_array($id) || $id instanceof Arrayable) {
+        if (is_array($id) || $id instanceof Arrayable)
             return $this->findMany($id, $columns);
-        }
 
-        if (! is_null($this->model->getCacheTime()) && $this->model->getSingleModelCache())
-            return $this->findCached($id, $columns);
+        if (
+            method_exists($this, 'getCacheTime') &&
+            ! is_null($this->model->getCacheTime()) &&
+            $this->model->getSingleModelCache()
+        ) return $this->findCached($id, $columns);
 
         return $this->whereKey($id)->first($columns);
     }
