@@ -11,7 +11,7 @@ class DataTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__.'/database/factories');
+        // $this->withFactories(__DIR__.'/database/factories');
         $this->loadMigrationsFrom([
             '--path' => realpath(__DIR__.'/database/migrations'),
         ]);

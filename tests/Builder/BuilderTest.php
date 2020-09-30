@@ -12,7 +12,7 @@ class BuilderTest extends DataTestCase
     /** @test */
     public function itProperlyCounts()
     {
-        factory(Book::class, 20)->create();
+        Book::factory(20)->create();
         $resource = DB::table('test_books')->skip(2)->take(3)->resource();
 
         $this->assertInstanceOf(ResourceableCollection::class, $resource);

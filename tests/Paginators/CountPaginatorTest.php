@@ -11,7 +11,7 @@ class CountPaginatorTest extends DataTestCase
     /** @test */
     public function itProperlyCounts()
     {
-        factory(Book::class, 20)->create();
+        Book::factory(20)->create();
         $collection = Book::skip(2)->take(3)->get();
 
         $collection->setPaginator(CountPaginator::class);

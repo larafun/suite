@@ -28,7 +28,7 @@ class ResourceableCollectionTest extends DataTestCase
     /** @test */
     public function itPresentsTheCollection()
     {
-        factory(Book::class, 20)->create();
+        Book::factory(20)->create();
         $collection = Book::take(2)->skip(3)->get();
 
         $response = $collection->toResponse(null);

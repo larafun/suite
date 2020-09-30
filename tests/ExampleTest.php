@@ -8,7 +8,7 @@ class ExampleTest extends DataTestCase
 {
     public function testExample()
     {
-        factory(Book::class, 20)->create();
+        Book::factory(20)->create();
         $this->assertCount(20, Book::all());
     }
 }

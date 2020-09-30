@@ -1,13 +1,20 @@
 <?php
 
-namespace Larafun\Suite\Tests;
+namespace Larafun\Suite\Tests\Database\Factories;
 
-use Faker\Generator as Faker;
+use Larafun\Suite\Tests\Models\Book;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Models\Book::class, function (Faker $faker) {
-    return [
-        'author'    => $faker->name,
-        'title'     => $faker->sentence,
-        'published' => $faker->year,
-    ];
-});
+class BookFactory extends Factory
+{
+    protected $model = Book::class;
+
+    public function definition()
+    {
+        return [
+            'author'    => $this->faker->name,
+            'title'     => $this->faker->sentence,
+            'published' => $this->faker->year,
+        ];
+    }
+}
