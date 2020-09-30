@@ -11,7 +11,6 @@ class Book extends Model
 
     protected $table = 'test_books';
 
-
     protected static function newFactory()
     {
         return \Larafun\Suite\Tests\Database\Factories\BookFactory::new();
