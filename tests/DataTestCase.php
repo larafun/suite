@@ -11,9 +11,7 @@ class DataTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->loadMigrationsFrom([
-            '--path' => realpath(__DIR__.'/Database/migrations'),
-        ]);
+        $this->loadMigrationsFrom(__DIR__ . '/Database/migrations');
     }
 
     protected function getPackageProviders($app)
