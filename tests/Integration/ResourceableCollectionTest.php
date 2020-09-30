@@ -42,11 +42,15 @@ class ResourceableCollectionTest extends DataTestCase
         $this->assertObjectHasAttribute('meta', $presented);
         $this->assertObjectHasAttribute('pagination', $presented->meta);
 
-        $this->assertArraySubset([
-                        'size'  => 2,
-                        'page'  => 2,
-                        'total' => 20,
-                        'total_pages'   => 10
-                    ], (array) $presented->meta->pagination);
+        $pagination = (array) $presented->meta->pagination;
+
+        $this->assertArrayHasKey('size', $pagination);
+        $this->assertEquals(2, $pagination['size']);
+        $this->assertArrayHasKey('page', $pagination);
+        $this->assertEquals(2, $pagination['page']);
+        $this->assertArrayHasKey('total', $pagination);
+        $this->assertEquals(20, $pagination['total']);
+        $this->assertArrayHasKey('total_pages', $pagination);
+        $this->assertEquals(10, $pagination['total_pages']);
     }
 }
