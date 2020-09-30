@@ -1,10 +1,10 @@
 # Larafun Suite
 
-[![Build Status](https://travis-ci.org/larafun/suite.svg?branch=master)](https://travis-ci.org/larafun/suite)
-[![Docs Status](https://readthedocs.org/projects/larafun-suite/badge/?version=latest)](https://larafun-suite.readthedocs.io)
-[![Latest Stable Version](https://poser.pugx.org/larafun/suite/v/stable)](https://packagist.org/packages/larafun/suite)
-[![License](https://poser.pugx.org/larafun/suite/license)](https://packagist.org/packages/larafun/suite)
-[![Total Downloads](https://poser.pugx.org/larafun/suite/downloads)](https://packagist.org/packages/larafun/suite)
+[![Build Status](https://github.com/larafun/suite/workflows/Testing/badge.svg)](https://github.com/larafun/suite/actions)
+[![Docs Status](https://img.shields.io/readthedocs/larafun-suite)](https://larafun-suite.readthedocs.io)
+[![Latest Stable Version](https://img.shields.io/packagist/v/larafun/suite)](https://packagist.org/packages/larafun/suite)
+[![License](https://img.shields.io/packagist/l/larafun/suite)](https://packagist.org/packages/larafun/suite)
+[![Total Downloads](https://img.shields.io/packagist/dt/larafun/suite)](https://packagist.org/packages/larafun/suite)
 
 A small collection of classes and traits that will make your Laravel API development even more awesome!
 
