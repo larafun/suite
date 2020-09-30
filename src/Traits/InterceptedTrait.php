@@ -365,9 +365,9 @@ trait InterceptedTrait
      * @param  mixed  $value
      * @return $this
      */
-    public function push($value)
+    public function push(...$values)
     {
-        return $this->toBase()->push($value);
+        return $this->toBase()->push($values);
     }
 
     /**
@@ -489,7 +489,7 @@ trait InterceptedTrait
      * @param  callable|null  $callback
      * @return static
      */
-    public function sort(callable $callback = null)
+    public function sort($callback = null)
     {
         return $this->toBase()->sort($callback);
     }

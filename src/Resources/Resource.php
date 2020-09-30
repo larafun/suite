@@ -7,11 +7,11 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Larafun\Suite\Contracts\Paginatable;
 use Illuminate\Http\Resources\MissingValue;
-use Illuminate\Http\Resources\Json\Resource as BaseResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Larafun\Suite\Contracts\Resourceable;
 use Illuminate\Support\Str;
 
-class Resource extends BaseResource
+class Resource extends JsonResource
 {
     /**
      * The Request
